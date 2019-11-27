@@ -10,6 +10,14 @@ namespace PetStore.Services.Interfaces
     {
         int Create(string name);
 
+        BrandModel GetById(int id);
+
+        void RemoveById(int id);
+
+        void Remove(BrandModel brand);
+
         IEnumerable<BrandModel> GetAllBrands();
+
+        IEnumerable<BrandModel> Search(string name);
     }
 }

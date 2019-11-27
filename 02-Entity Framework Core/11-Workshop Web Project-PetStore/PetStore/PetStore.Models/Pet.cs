@@ -25,8 +25,12 @@ namespace PetStore.Models
         public Genre Genre { get; set; }
 
         [Required]
-        [Range(0, 10000)]
+        [Range(0, 10000d)]
         public decimal Price { get; set; }
+
+        [Required]
+        [Range(0, 10000d)]
+        public decimal DistributorPrice { get; set; } 
 
         public int? OrderId { get; set; }
         public Order Order { get; set; }

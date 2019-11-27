@@ -14,6 +14,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PetStore.Data\PetStore.Data.csproj" />
+    <ProjectReference Include="..\PetStore.Models\PetStore.Models.csproj" />
+    <ProjectReference Include="..\PetStore.Services.Models\PetStore.Services.Models.csproj" />
     <ProjectReference Include="..\PetStore.Services\PetStore.Services.csproj" />
   </ItemGroup>
 

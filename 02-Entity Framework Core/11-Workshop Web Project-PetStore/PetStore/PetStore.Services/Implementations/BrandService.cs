@@ -19,7 +19,7 @@ namespace PetStore.Services.Implementations
         {
             if(name == null)
             {
-                throw new ArgumentNullException("Brand name cannot be null!");
+                throw new ArgumentException("Brand name cannot be null!");
             }
 
             if (context.Brands.Any(b => b.Name == name))
@@ -42,6 +42,55 @@ namespace PetStore.Services.Implementations
             return brand.Id;
         }
 
+        public BrandModel GetById(int id)
+        {
+            if (id < 1 || id > context.Brands.Count())
+            {
+                throw new ArgumentException("Invalid brand Id");
+            }
+
+            var brand = context.Brands.Find(id);
+
+            return new BrandModel()
+            {
+                Name = brand.Name,
+                ToysCount = brand.Toys.Count,
+                FoodsCount = brand.Food.Count
+            };
+        }
+
+        public void RemoveById(int id)
+        {
+            if (id < 1 || id > context.Brands.Count())
+            {
+                throw new ArgumentException("Invalid brand Id");
+            }
+
+            var brand = context.Brands.Find(id);
+
+            context.Brands.Remove(brand);
+            context.SaveChanges();
+        }
+
+        public void Remove(BrandModel brand)
+        {
+            if (String.IsNullOrWhiteSpace(brand.Name))
+            {
+                throw new ArgumentException("Brand name cannot be null!");
+            }
+
+            var brandToRemove = context.Brands
+                .FirstOrDefault(b => b.Name == brand.Name);
+
+            if (brandToRemove == null)
+            {
+                throw new InvalidOperationException("No such brand exists!");
+            }
+
+            context.Brands.Remove(brandToRemove);
+            context.SaveChanges();
+        }
+
         public IEnumerable<BrandModel> GetAllBrands()
         {
             var brands = context.Brands
@@ -55,6 +104,24 @@ namespace PetStore.Services.Implementations
                 .ToList();
 
             return brands;
+        }
+
+        public IEnumerable<BrandModel> Search(string name)
+        {
+            if (String.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentNullException("Invalid brand name!");
+            }
+
+            return context.Brands
+                .Where(b => b.Name.ToLower().Contains(name.ToLower()))
+                .Select(b => new BrandModel()
+                {
+                    Name = b.Name,
+                    ToysCount = b.Toys.Count,
+                    FoodsCount = b.Food.Count
+                })
+                .ToList();
         }
     }
 }

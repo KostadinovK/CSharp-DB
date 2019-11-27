@@ -22,8 +22,12 @@ namespace PetStore.Models
         public Category Category { get; set; }
 
         [Required]
-        [Range(0, 10000)]
+        [Range(0, 10000d)]
         public decimal Price { get; set; }
+
+        [Required]
+        [Range(0, 10000d)]
+        public decimal DistributorPrice { get; set; }
 
         public ICollection<ToysOrders> ToyOrders { get; set; } = new HashSet<ToysOrders>();
     }

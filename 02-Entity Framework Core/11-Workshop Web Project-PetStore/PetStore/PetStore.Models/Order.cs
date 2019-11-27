@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using PetStore.Models.Enums;
 
 namespace PetStore.Models
 {
@@ -18,6 +19,8 @@ namespace PetStore.Models
 
         [Required]
         public DateTime DateTime { get; set; }
+
+        public OrderStatus OrderStatus { get; set; }
 
         public ICollection<FoodOrders> OrdersFood { get; set; } = new HashSet<FoodOrders>();
         public ICollection<ToysOrders> OrdersToys { get; set; } = new HashSet<ToysOrders>();
